@@ -1,4 +1,6 @@
-SUPABASE_URL="your_supabase_url_here"
-SUPABASE_KEY="your_secret_key_here"
-BUCKET_NAME="photos"
-TABLE_NAME="photos"
+import os
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+BUCKET_NAME = "photos"
+TABLE_NAME = "photos"

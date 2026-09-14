@@ -22,9 +22,6 @@ from config import (
     SUPABASE_URL,
     TABLE_NAME,
 )
-print("URL IN USE:", SUPABASE_URL)
-print("KEY STARTS:", SUPABASE_KEY[:12])
-print("KEY LENGTH:", len(SUPABASE_KEY))
 
 BASE_DIR = Path(__file__).resolve().parent
 
