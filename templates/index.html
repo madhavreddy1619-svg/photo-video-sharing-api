@@ -3,31 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Gallery</title>
+    <title>Media Gallery</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <header>
-        <h1>My Photo Gallery</h1>
-        <a href="/upload" class="btn btn-primary">Upload photo</a>
+        <h1>My Media Gallery</h1>
+        <a href="/upload" class="btn btn-primary">Upload media</a>
     </header>
     <main>
-        {% if photos %}
+        {% if media %}
             <div class="gallery">
-                {% for photo in photos %}
+                {% for item in media %}
                     <div class="photo-card">
-                        <img src="{{ photo.image_url }}"
-                             alt="{{ photo.title }}"
-                             loading="lazy">
-                        <h3>{{ photo.title }}</h3>
-                        <form action="/delete/{{ photo.id }}" method="post">
+                        {% if item.media_type == "video" %}
+                            <video src="{{ item.image_url }}"
+                                   controls
+                                   preload="metadata"></video>
+                        {% else %}
+                            <img src="{{ item.image_url }}"
+                                 alt="{{ item.title }}"
+                                 loading="lazy">
+                        {% endif %}
+                        <h3>{{ item.title }}</h3>
+                        <form action="/delete/{{ item.id }}" method="post">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <p class="empty">Nothing here yet. Upload your first photo.</p>
+            <p class="empty">Nothing here yet. Upload your first photo or video.</p>
         {% endif %}
     </main>
 </body>

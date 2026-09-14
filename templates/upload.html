@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Photo</title>
+    <title>Upload Media</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <header>
-        <h1>Upload a photo</h1>
+        <h1>Upload media</h1>
         <a href="/" class="btn btn-secondary">Back to gallery</a>
     </header>
     <main>
@@ -19,14 +19,14 @@
             <label for="title">Title</label>
             <input type="text" id="title" name="title" required>
 
-            <label for="file">Image file</label>
+            <label for="file">Image or video file</label>
             <input type="file"
                    id="file"
                    name="file"
-                   accept="image/*"
+                   accept="image/*,video/*"
                    required>
 
-            <button type="submit" class="btn btn-primary">Upload photo</button>
+            <button type="submit" class="btn btn-primary">Upload</button>
         </form>
     </main>
 </body>
