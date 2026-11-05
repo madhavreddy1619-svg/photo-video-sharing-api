@@ -148,7 +148,3 @@ python diagnose.py
 The diagnostic checks configuration, reads the media table, lists storage buckets, uploads a temporary image, and attempts to remove it. Review the printed results, then upload and delete a sample through the gallery to check the complete flow.
 
 > **Current scope:** Media URLs are public, and the application has no user authentication or ownership checks. Add access controls before exposing upload and delete routes publicly.
-
----
-
-Built by **Gundaram Madhav Reddy** · [GitHub](https://github.com/madhavreddy1619-svg)
