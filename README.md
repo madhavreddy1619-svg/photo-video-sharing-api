@@ -1,17 +1,17 @@
 # Photo & Video Sharing API
 
-A media-sharing web application built with **FastAPI, Jinja2, and Supabase**. Upload photos and videos, browse them in a responsive gallery, and manage stored media through a simple browser interface.
+Upload photos and videos, browse them in a gallery, and delete files you no longer need. Built with **FastAPI, Jinja2, and Supabase**.
 
-Media files live in Supabase Storage, while titles, public URLs, and media types are saved in PostgreSQL through Supabase.
+Supabase Storage holds the files, and PostgreSQL stores their titles, URLs, and media types.
 
 ## Features
 
-- **Photo and video uploads** — add a title and upload media from the browser.
-- **Responsive gallery** — browse media with lazy-loaded images and built-in video playback controls.
-- **Upload validation** — check file extensions, reject empty files, and enforce separate image and video size limits.
-- **Unique filenames** — generate UUID-based storage names to avoid filename collisions.
-- **Media management** — delete a stored file and its database record; attempt storage cleanup if an upload or metadata insert fails.
-- **Interactive API documentation** — explore request fields and routes through FastAPI's Swagger UI.
+- Upload photos and videos with a title.
+- Browse a responsive gallery with lazy-loaded images and video controls.
+- Check file extensions and sizes, and reject empty uploads.
+- Generate UUID filenames to avoid filename collisions.
+- Delete media files and their database records.
+- Attempt to clean up stored files if an upload or metadata save fails.
 
 ## Tech Stack
 
@@ -55,7 +55,7 @@ Activate the virtual environment:
 source .venv/bin/activate
 ```
 
-Use `python3` instead of `python` if required by your system. With the environment active, install the packages used by the application:
+Use `python3` if your system does not recognize `python`. With the virtual environment active, install the dependencies:
 
 ```bash
 python -m pip install fastapi uvicorn supabase jinja2 python-multipart
@@ -72,13 +72,13 @@ Create a **public storage bucket** named `photos` and a database table named `ph
 | `image_url` | Text; stores the public URL for either a photo or a video |
 | `media_type` | Text; `image` or `video` |
 
-Allow the image/video MIME types and upload sizes you intend to use in the bucket settings. Your server credential must have permission to read, insert, and delete table records, and upload and remove storage objects.
+In the bucket settings, allow the image and video MIME types and file sizes you want to upload. Your server key needs access to read, insert, and delete table records, and upload and remove storage files.
 
 ### 3. Configure the application
 
 Copy `config.example.py` to `config.py`. Both `BUCKET_NAME` and `TABLE_NAME` default to `photos`; update them if you chose different names.
 
-Set the following environment variables in the terminal where you will start the server:
+Set your Supabase credentials in the same terminal you will use to run the app:
 
 **Windows PowerShell**
 
@@ -94,7 +94,7 @@ export SUPABASE_URL='https://your-project-ref.supabase.co'
 export SUPABASE_KEY='your-server-side-key'
 ```
 
-`config.py` reads these variables from the environment; `.env` files are not loaded automatically. Keep credentials private. Both `config.py` and `.env` are excluded by `.gitignore`.
+`config.py` reads these environment variables directly; the app does not load `.env` files. Keep your key private. Both `config.py` and `.env` are listed in `.gitignore`.
 
 ### 4. Start the server
 
@@ -112,7 +112,7 @@ python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 
 | Method | Route | Purpose |
 | --- | --- | --- |
-| `GET` | `/` | Render the gallery, ordered by descending record ID |
+| `GET` | `/` | Show the gallery, with higher record IDs first |
 | `GET` | `/upload` | Display the upload form |
 | `POST` | `/upload` | Upload media using multipart fields `title` and `file` |
 | `POST` | `/delete/{media_id}` | Delete a media file and its database record |
@@ -139,12 +139,10 @@ Use `curl.exe` in Windows PowerShell.
 | `diagnose.py` | Supabase configuration and storage checks |
 | `test_image.png` | Sample file for manual uploads |
 
-## Verify Your Setup
+## Check the Setup
 
 ```bash
 python diagnose.py
 ```
 
-The diagnostic checks configuration, reads the media table, lists storage buckets, uploads a temporary image, and attempts to remove it. Review the printed results, then upload and delete a sample through the gallery to check the complete flow.
-
-> **Current scope:** Media URLs are public, and the application has no user authentication or ownership checks. Add access controls before exposing upload and delete routes publicly.
+This script checks your configuration, table access, and storage bucket. It also uploads a temporary image and tries to remove it afterward. Review the output, then upload and delete a sample in the gallery.
